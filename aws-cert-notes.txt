@@ -1,0 +1,3 @@
+Access keys are secret just like a passwd. 
+acces key ID - username
+secret access key - passwd
