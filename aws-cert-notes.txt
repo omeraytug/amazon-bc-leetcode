@@ -1,3 +1,37 @@
 Access keys are secret just like a passwd. 
 acces key ID - username
 secret access key - passwd
+
+
+ec2 - elastic compute cloud - IaaS: - Fundamental understand how cloud works
+- renting virtual machines (EC2 instances)
+- storing data on virtual drives (EBS)
+- distributing load across machines (ELB)
+- scaling the services using am auto-scaling group (ASG)
+
+OS choices: 
+Linux, Windows, MacOS - 
+choose configs: - 
+CPU, RAM, Storage space, network card, firewall rules, bootstrap script (launching commands that run when a machine runs - boot tasks)
+
+
+instance types:
+example: m5.2xlarge:
+m: instance class
+5: generation
+2xlarge: size within the instance class
+
+
+EC2 instance types:
+General purpose - web servers, code repos.
+Compute Optimized - require high perf processers.
+Memory Optimized: fast perf for workloads that process large data sets in memory
+Storage Optimized: Storage intensive tasks that require high read and write access to large data sets on local storage
+
+Security groups act as a firewall on EC2 instances:
+regulate: ports, ips, type of network
+
+ssh'ing into the instance:
+ssh -i EC2Tutorial.pem ec2-user@[public_ip]
+
+NEVER EVER ENTER YOUR IAM KEYS INTO AN EC2 INSTANCE - INSTEAD USE IAM ROLES
