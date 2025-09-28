@@ -53,5 +53,4 @@ class Solution:
                 res -= roman[s[i]]
             else:
                 res += roman[s[i]]
-        return res  
-    
+        return res
