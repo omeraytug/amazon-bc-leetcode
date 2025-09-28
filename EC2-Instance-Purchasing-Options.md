@@ -1,44 +1,3 @@
-Access keys are secret just like a passwd. 
-acces key ID - username
-secret access key - passwd
-
-
-ec2 - elastic compute cloud - IaaS: - Fundamental understand how cloud works
-- renting virtual machines (EC2 instances)
-- storing data on virtual drives (EBS)
-- distributing load across machines (ELB)
-- scaling the services using am auto-scaling group (ASG)
-
-OS choices: 
-Linux, Windows, MacOS - 
-choose configs: - 
-CPU, RAM, Storage space, network card, firewall rules, bootstrap script (launching commands that run when a machine runs - boot tasks)
-
-
-instance types:
-example: m5.2xlarge:
-m: instance class
-5: generation
-2xlarge: size within the instance class
-
-
-EC2 instance types:
-General purpose - web servers, code repos.
-Compute Optimized - require high perf processers.
-Memory Optimized: fast perf for workloads that process large data sets in memory
-Storage Optimized: Storage intensive tasks that require high read and write access to large data sets on local storage
-
-Security groups act as a firewall on EC2 instances:
-regulate: ports, ips, type of network
-
-ssh'ing into the instance:
-ssh -i EC2Tutorial.pem ec2-user@[public_ip]
-
-NEVER EVER ENTER YOUR IAM KEYS INTO AN EC2 INSTANCE - INSTEAD USE IAM ROLES
-
-
-########################################################
-
 EC2 Instances Purchasing Options
 - On-demand instances: short workload, predictable pricing, pay by second
 - Reserved (1-3 years): 
@@ -51,6 +10,7 @@ EC2 Instances Purchasing Options
 - Capacity Reservations - reserve a capacity in a specific AZ for any duration
 
 
+
 EC2 on Demand:
 pay for what you use. 
 Linux or Windows - billing per second, after the first minute
@@ -58,6 +18,7 @@ other os - billing per hour
 Highest cost but no upfront payment
 no long term commitment
 recommended for short term and un-interrupted workloads where you cant predict how the application will behave
+
 
 
 EC2 Reserved Instances:
@@ -69,7 +30,8 @@ reserved instance's scope - regional or zonal
 recommended for steady-state usage apps (think databes)
 you can buy and sell in the reserved instance marketplace
 
-    -Convertible Reserved instance - can change the ec2 type, instance family, os, scope and tenancy / up to 66 discount       
+-Convertible Reserved instance - can change the ec2 type, instance family, os, scope and tenancy / up to 66 discount       
+
 
 
 EC2 Saving Plans:
@@ -80,12 +42,14 @@ locked to a specific instance family and aws region
 flexible: instance size, os, tenancy
 
 
+
 EC2 Spot Instances:
 most discount - up to 90 compared to on demand
 instances you can lose at any point if your max price is less than the current spot price
 most cost efficient instances in aws
 useful to workloads that are resilient to failure: batch jobs, data analysis, image processing, any distrubed workloads, workloads with a flexible start and end time
 Not suitable for crtical jobs or databases
+
 
 
 EC2 Dedicated Hosts:
@@ -97,10 +61,12 @@ useful for software that have complicated licensing model (BYOL - bring your own
 or for companies that have strong regulatory or compliance needs
 
 
+
 Dedicated Instances:
 instances run on hardware thats dedicated to you
 may share hardware with other instances in same account
 no control over instace placement
+
 
 
 EC2 Capacity Reservations:
@@ -112,4 +78,3 @@ your charged at on demand rate whether you run instances or Not
 suitable for short term, uninterrupted workloads that need to be in a specific az
 
 ![Alt text](./ec2-instances-purchasing.png)
-
