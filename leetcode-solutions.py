@@ -57,6 +57,41 @@
 
 
 #14 longest common prefix
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        res = "" 
+
+        for i in range(len(strs[0])): #iterate over the characters of the first string
+            for s in strs: #compare with all other strings
+                if i == len(s) or s[i] != strs[0][i]: #if out of range or mismatch 
+                    return res
+            res += strs[0][i] #if match, append
+        return res
+                
 
 
+#20 Valid Parentheses
+class Solution:
+    def validParanthesis(self, s:str ) -> bool:
+        stack = []
+        closeToOpen = {")": "(", "]": "[", "}": "{"}
+
+        for c in s:
+            if c in closeToOpen:
+                if stack and stack[-1] == closeToOpen[c]:
+                    stack.pop()
+                else:
+                    return False
+            else:
+                stack.append(c)
+        return True if not stack else False
+                
+
+
+#21 merge two sorted lists
+#two lists that have integers will be merged where the final list should be in order
+class Solution:
+    def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
+        dummy = ListNode()
+        tail = dummy
 
