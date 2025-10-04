@@ -100,3 +100,32 @@ class Solution:
 def lastWord(s):
 	return len(s.split()[-1])
 
+
+
+
+#69 Sqrt(x)
+
+
+
+#70 Climbing Stairs
+class Solution:
+    def climbStairs(self, n):
+        one, two = 1, 1
+
+        for i in range(n - 1):
+            temp = one
+            one = one + two
+            two = temp
+
+        return one
+    
+
+#83 Remove duplicate from Sorted List
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        cur = head
+        while cur:
+            while cur.next and cur.next.val == cur.val:
+                cur.next = cur.next.next
+            cur = cur.next
+        return head
