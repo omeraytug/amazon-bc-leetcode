@@ -149,4 +149,52 @@ Spot Fleets allow us to automatically request Spot Instances with the lowest pri
 
 ########################################################
 
+Elastic IP Address: fixed IP that could be attached to an instance. Max 5 elastic ips in your account
 
+
+
+Placement Groups: control over the EC2 instance Placement Strategy
+-Cluster - clusters low latency group in a single AZ
+Great newtork - 10gbps bandwith
+If the AZ fails, all instances fail at the same time
+Big Data job that needs to complete fast, App that needs extremely low latency and hgh network throughpu
+
+-Spread - spreads instances across underlying hardware (max 7 instances per group per AZ) - critical applications
+Located on different hardware
+Can span acrros AZ
+Reduced risk is simultaneous failure
+limited to 7 instances per AZ per placement group
+app that needs to maximize high availability
+critical app where each instance must be isolated from one another
+
+-Partition - spreads instances across many different partitions (which rely on different sets of racks) within an AZ. Scales to 100s of EC2 instances per group
+up to 7 partitions per az
+can span across multiple azs in the same region
+up to 100s of ec2 instances
+instances in a partition do not share racks with the instances in the other partitions
+a partition failure can affect many ec2 but wont affect other partitions
+ec2 instances get access to the partition info as metadata
+use case: hdfs, hbase, cassandra, kafka
+
+
+
+
+Elastic Network Interfaces (ENI)
+- virtual network card - what gives ec2 instances network
+primary private ipv4 one or more secondary ipv4
+one elastic ip per private
+one public ipv4
+one or more security groups
+a mac address
+
+you can create ENI independently and attach them on the fly (move them) on ec2 instances for failover
+bound to a specific AZ
+
+
+
+EC2 Hibernate
+the in-memory ram state is preserved
+boot is much faster
+the ram state is written to a file in the root EBS volume
+the root ebs volume must be encrypted
+instance ram size must be less than 150 gb
