@@ -204,6 +204,9 @@ instance ram size must be less than 150 gb
 EBS volume
 Elastick Block Store - a network drive you can attack to your instance while they run
 
+attached EBS volume must be in the same az as the instance's az
+cannot be attached to multiple instances at one
+
 by default - root EBS volume is deleted
 by default - any other attached EBS volume is not deleted
 these can be controlled
