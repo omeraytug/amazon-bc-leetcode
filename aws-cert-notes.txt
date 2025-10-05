@@ -210,3 +210,12 @@ cannot be attached to multiple instances at one
 by default - root EBS volume is deleted
 by default - any other attached EBS volume is not deleted
 these can be controlled
+
+EBS snapshots
+backup of your EBS volume at a point in time
+after snapshotting the volume you can transfer it into another AZ
+
+
+AMI overview
+Amazon Machine Image
+You could create images as you desire just like an ISO image where some softwares etc would be already installed as you run the image on a new instance
