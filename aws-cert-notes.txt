@@ -222,10 +222,69 @@ after snapshotting the volume you can transfer it into another AZ
 AMI overview
 Amazon Machine Image
 You could create images as you desire just like an ISO image where some softwares etc would be already installed as you run the image on a new instance
-
+AMIs are region-specific
+if you want to utilize that AMI in a different region, you must first copy it to that region before launching an instance. 
 
 
 EC2 Instance Store
 EBS volumes are network drives with good but limited performance
 if you need high performance hardware disk, use EC2 instace Store
 name of the hardrive attached to the physical server
+better io performance
+ec2 instance store lose their storage if they are stopped (ephemeral)
+good for buffer / cache / scratch data / temporary content
+risk of data loss if hardware fails
+it offers the highest disk I/O performance among the options, making it ideal for high-performance caching in your application, especially since you don't mind losing the cache upon instance termination.
+
+
+
+EBS volume types
+- 6 types
+gp2 gp3 - general purpose ssd
+io1 io2 - highest performance ssd volume for mission critical low latency or high throughput workloads
+st 1 - low cost hdd designed for frequently accesed, throughput intensive workloads
+sc 1 - lowest cost hdd volume designed for less frequently accessed workloads
+- EBS volumes are characteriezed in size, throughput, iops 
+if in doubt, check the aws documentation
+only gp2 gp3 and io1 io2 block express can be used as boot volumes
+
+
+General Purpose ssd
+cost effctive, low latency
+system boot volumes, virtual desktops, development and test environments
+1 gib to 16 tib
+
+Provisioned IOPS (PIOPS) ssd
+critical business apps with sustained IOPS performance
+great for databases workloads (sensitive to storage perf and consistency)
+
+
+EBS Multi-attach io1/io2 family
+attach the same ebs volume to multiple ec2 instances in the same az
+each instance has full read and write permissions to the high performance volume
+up to 16 ec2 instances at a time: must use a file system thats cluster-aware
+
+
+EBS encryption
+minimal impact on latency
+
+
+Amazon EFS - elastic file system
+can be mounted on many ec2 on instances in multi AZ
+use case: content management, web serving, data sharing, wordpress
+uses security group to control access to EFS
+compatible with linux based AMI not Windows
+encryption at rest using KMS
+scales automatically
+- performance model
+
+throughput mode: 
+-Elastic - pay for what you use
+-Bursting - scales with the amount of storage for worklaods with basic performance requirements
+-Provisioned - if you can estimate yout workloads throughput requirements
+
+lifecycle management:
+transition into infrequent access
+transition into archive
+transition into standard
+- here you can chose after N days file could me moved to specific storage - automatically saves money
