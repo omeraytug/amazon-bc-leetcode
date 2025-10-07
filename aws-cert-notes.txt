@@ -175,7 +175,7 @@ instances in a partition do not share racks with the instances in the other part
 a partition failure can affect many ec2 but wont affect other partitions
 ec2 instances get access to the partition info as metadata
 use case: hdfs, hbase, cassandra, kafka
-
+distributed compatitiom
 
 
 
