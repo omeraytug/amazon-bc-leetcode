@@ -298,3 +298,22 @@ increase number of instances - scale out/in
 
 High availability:
 run instances for the same application across multi az
+
+
+load balancing: servers that forward traffic to multiple serves downstream
+elastic load balance (ELB)
+health check
+
+types of load balancers on aws:
+Classic load balancer - not really relevant
+application load balancer
+network load balancer
+gateway load balancer
+- recommended to use the newer gen 
+
+application load balancer
+layer 7 - http
+routing based on path in url 
+routing based on hostname in url
+routing based on query string, headers
+great fit for micro services and container based apps
