@@ -317,3 +317,11 @@ routing based on path in url
 routing based on hostname in url
 routing based on query string, headers
 great fit for micro services and container based apps
+
+network load balancer
+layer 4 - forward tcp udp traffic to your instances
+handle millions of requests per seconds
+ultra low latency
+nlb has one static ip per az, and supports assigning elastic ip
+target groups: ec2 instances, ip addresses, alb
+health checks support the tcp, http and https protocols
