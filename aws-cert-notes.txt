@@ -288,3 +288,13 @@ transition into infrequent access
 transition into archive
 transition into standard
 - here you can chose after N days file could me moved to specific storage - automatically saves money
+
+
+Vertical Scaling:
+increasing the instance size - scaling up/down
+
+horizantal scaling: 
+increase number of instances - scale out/in
+
+High availability:
+run instances for the same application across multi az
