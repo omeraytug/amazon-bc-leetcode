@@ -371,3 +371,23 @@ re-create an ec2 instance in case a previous one is terminated - unhealthy
 launch template
 based on the alarm - cloudwatch alarms
 
+auto scaling groups - scaling policies
+dynamic scaling:
+    target tracking scaling: time to setup
+    simple / step scaling
+
+scheduled scaling:
+anticipate a scaling based on known usage patterns
+
+predictive scaling: continuously forecast load and schedule scaling ahaead
+
+good metrics to scale on:
+cpu utilization
+request count per targer
+average network in / out
+any custom metrics
+
+
+Scaling cooldowns
+acter a scaling activity happens, you are in the cooldown period - default 300 seconds
+during cooldown asg will not launch or terminate additional instances 
