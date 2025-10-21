@@ -128,4 +128,20 @@ class Solution:
             while cur.next and cur.next.val == cur.val:
                 cur.next = cur.next.next
             cur = cur.next
-        return head
+        return heady
+    
+
+
+
+# 125 Valid Palindrome
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        newStr = ""
+
+        for c in s:
+            if c.isalnum():
+                newStr += c.lower()
+        
+        return newStr == newStr[::-1]
+
+print(Solution().isPalindrome("A man, a plan, a canal: Panama"))
