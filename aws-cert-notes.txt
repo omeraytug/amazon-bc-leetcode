@@ -391,3 +391,129 @@ any custom metrics
 Scaling cooldowns
 acter a scaling activity happens, you are in the cooldown period - default 300 seconds
 during cooldown asg will not launch or terminate additional instances 
+
+
+
+
+RDS - relational database service
+uses sql as query language
+-postgress
+-mysql
+-mariadb
+-oracle
+-microsoft sql server
+-ibm db2
+- aurora (Aws proprietary database)
+
+rds is a managed service
+but you cannot ssh into it
+rds storage auto scaling: 
+
+
+RDS Read Replicas for read scalability:
+up to 15 read Replicas
+within az cross az or cross region
+replications is ASYNC, so reads are eventually consistent
+replicas can be promoted to their own DB 
+applications must update connection string to leverage read replicas
+
+read replicas are for only SELECT (read)
+
+
+in aws theres a networl cost when data goes from one az to another
+for rds read replicas within same region you dont pay that fee
+
+RDS multi az (Disaster recovery)
+-sync replications
+-one dns name - automatic app failover to standby
+-increase availability
+-failover in case of loss of AZ, loss of networ, instance or storage failure
+-no manual intervention in apps
+-not used for scaling
+-- The Read Replicas be setup as multi az for disaster recovery
+
+RDS - from single AZ to multi AZ
+zero downtime operation - no need to stop
+just click on modify for the database
+snapshot is taken - a new db is restored from the snapshot in a new az - sync is established between the two databases
+
+RDS custom
+Managed oracle and microsoft sql server database with os and database customization
+
+RDS: entire database and the os to be managed by Aws
+RDS Custom: full admin access to the underlying os ad the database 
+
+
+Amazon Aurora 
+-not open source
+-postgress and mysql are supported
+-aws cloud optimized 
+-storage automatically grows in increments of 10gb up to 128 tb 
+-up to 15 replicas and faster replica process than mysql 
+-costs more than rds - but more efficient   
+
+-6 copies of your data across 3 az 
+self healing
+storafe is striped across 100s of volumes 
+-one aurora instance takes writes (master)
+-automated failover for master in less than 30 secs 
+-master  + up to 15 aurora read replicas serve reads 
+-support for cross region replication 
+
+aurora db cluster
+reader endpoint - connection load balancing 
+writing endpoint - pointing to the master
+
+
+Aurora Replicas - Auto Scaling
+
+
+RDS Backups
+- automated backups:
+daily full
+transaction logs every 5 mins - ability to resto to any point in time 
+1 to 35 days of retention, set 0 to disable automated backups 
+
+-manuak db snapshots:
+manually triggered by the user
+retention of backup for as long as you want 
+
+Aurora backups
+- automated
+1 to 35 days - cannot be disabled
+point-in-time recovery in that timeframe 
+
+-manual db snapshots:
+manually triggered by the user
+retention of backup for as long as you want 
+
+RDS & Aurora restore options
+- restoring a rds / aurora backup pr a snapshot creates a new database
+- restoring mysql rds database from s3 
+- restoring mysql aurora cluster from s3 (Percona XtraBackup)
+
+
+Aurora Database cloning:
+create a new aurora db cluster from an existing one
+faster than snapshot and restore 
+
+
+RDS and Aurora Security
+- at rest encryption
+if the master is not encrypted the read replicas cannot be encrypted
+to encrypt an un-encrypted database, go through a db snapshot and restore as encrypted
+
+-in-flight encryption 
+-IAM Authentication 
+-Security Groups
+-No SSH available - except on RDS Custom 
+-Audit Logs can be enabled and sent to Cloudwatch logs
+
+
+Amazon RDS Proxy 
+allows apps to pool and share db connections established with the database 
+improves database efficiency by redcuing the stress 
+RDS Proxy is never publicly accesible - must be accessed from VPC 
+
+
+amazon ElastiCache Overview 
