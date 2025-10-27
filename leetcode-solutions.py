@@ -145,3 +145,5 @@ class Solution:
         return newStr == newStr[::-1]
 
 print(Solution().isPalindrome("A man, a plan, a canal: Panama"))
+
+
