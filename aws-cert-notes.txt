@@ -619,3 +619,27 @@ you can create a cloudwatch metric and associate a cloudwatch alarm, the create 
 
 Hybrid DNS
 Resolver endpoint to talk to from cloud to on premises data center or vice versa (Resolver outboud/inbound endpoint depending on the case)
+
+
+
+Instantiating Applications quickly:
+-EC2 instances:
+Use a Golde AMI: install your apps, os dependencies etc beforehand and launch your ec2 instanse from the golden AMI
+Bootstrap using User Data: ---
+Hybrid: mix golden ami and user data (elastic beanstalk)
+
+-rds databases:
+restore from a snapshot: the database will have schemas and data ready
+
+- ebs volumes:
+restore from a snapshot: the disk will already be formatted and have data
+
+
+Elastic beanstalk
+developer centrix view of deploying an app on AWS - uses all the components we have seen before-managed service - full control over the config - free but you pay for the underlying instances 
+
+web server env - worker env 
+
+
+deployment modes:
+single instance, great for dev / high availability with load balancer, great for prod
