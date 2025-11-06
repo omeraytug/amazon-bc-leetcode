@@ -616,3 +616,6 @@ Private Hosted Zones:
 since the route 53 health checkers are outside the vpc and they cant access private endpoints
 you can create a cloudwatch metric and associate a cloudwatch alarm, the create a health check that checks the alarm itself
 
+
+Hybrid DNS
+Resolver endpoint to talk to from cloud to on premises data center or vice versa (Resolver outboud/inbound endpoint depending on the case)
