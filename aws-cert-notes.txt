@@ -517,3 +517,101 @@ RDS Proxy is never publicly accesible - must be accessed from VPC
 
 
 amazon ElastiCache Overview 
+
+***
+
+
+
+DNS 
+translates human friendly hostnames into the machin ip addresses
+backbone of the intervention
+
+Terminologies:
+- Domain registrar: Amazon Route 53, GoDaddy
+- DNS Records: A, AAAA, CNAME, needs
+-Zone File: contains DNS Records
+- Name Server: resolves DNS queries (Authoritative or non-Authoritative)
+-top level domain (TLD): .com, .us, .gov, .org
+-second level domain (SLD); amazon.com, google.com
+
+
+Route 53
+highly available, scalable, fully managed and Authoritative DNS - you can update the dns records 
+Domain Registrar 
+you can check health of your resources
+only aws service that provides 100% availability sla 
+dns port is 53, name comes from theres
+
+
+Record Types: 
+A - maps hostname to a ipv4
+AAAA - ipv6
+CNAME - maps a hostname to another hostname - cant create a cnam record for the top node of a dns namaspace
+NS - name servers for the hosted zone - controls how a traffic is routed to a domain
+
+Hosted Zones:
+Public Hosted Zones - 
+Private Hosted Zones - queired within your vpc
+
+You pay 0.5 usd per month per hosted zone
+
+
+Route 53 - Records TTL - time to live
+caching the result for the amount of ttl of the record.
+
+high ttl - 24 hr: less traffic on route 53, possibly outdated records - if you changed something
+low ttl - 60 secs: more traffic on route 53 more cost, records are outdated for less time, easy to change records
+
+
+CNAME vs Alias
+CNAME - points a hostname to any other hostname - only for non root domain
+Alias: points a hostname to an AWS resource - works for root domain and non root domain, free of charge, native health check
+
+ALias Records
+maps hostname to an aws resource
+an extension to dns functionality
+automatically recognizes changes in the resource's ip addresses
+unlike CNAME, it can be used for the top npde of a DNS namespace, eg: example.com 
+always of type A or AAAA for AWS resources
+you cannot set ttl
+Targets: Elastic Load balancers, cloudfront distributions, api gateway, elastic beanstalk environments, s3 websites, vpc interface endpoints, global accelerator accelerator, route 53 record in the same hosted zone
+you cannot set an alias record for an ec2 dns name
+
+
+route 53 Routing policies
+-simple - typically route traffic to a single resource. can specify multiple values in the same record, client chooses randomly. when alias enabled, specify only one aws resource. cant be associated with health checks
+
+-weighted - control the % of the requests that go to each specific resource, assign each record a relative weight. dont need to sum 100. dns records must have the same name and type, can be associated with healt checks. load balancing between regions, testing new application versions.  
+
+-failover - set health check (mandotary) in case of primary being unhealthy the secondary (disaster recovery) will take over and the client will get its result. 
+
+-latency based - least latency close to us, super helpful when latency for users is a priority, can be combined with health checks
+
+-geolocation - based on user location. specify location by continent, country or by us state. can be associated with health checks 
+
+-multi-value answer
+
+-geoproximity (using route 53 traffic flow feature)
+
+
+Route 53 - Health checks
+- http health checks are only for public resources
+-health check - automated dns failover: health checks that monitor an endpoint, that monitor other health checks, that monitor cloudwatch alarms
+-integreated with cloudwatch metrics
+
+- monitor an endpoint:
+abour 15 global health checkers - healthy/unhealthy threshold - 3 (default) - interval, 30 secs (can set to 10 sec - higher cost). if more than 18 procent of healt checkers report endpoint is healthy, route 53 considers it healthy, vice versa. 
+pass only when the enpoint responds with 2xx or 3xx status codes
+configure your router/firewall to allow incoming requests from route 53 health checks 
+
+Calculated Health Checks:
+combine the results of multiple health checks into a single health check
+you can use OR AND Not
+can monitor up to 256 child health checks
+specify how many of the health checks need to pass to make the parent pass
+
+
+Private Hosted Zones:
+since the route 53 health checkers are outside the vpc and they cant access private endpoints
+you can create a cloudwatch metric and associate a cloudwatch alarm, the create a health check that checks the alarm itself
+
