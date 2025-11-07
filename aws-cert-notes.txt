@@ -643,3 +643,114 @@ web server env - worker env
 
 deployment modes:
 single instance, great for dev / high availability with load balancer, great for prod
+
+
+
+S3
+-infinitely scaling storage
+
+Use cases:
+backuo and storage
+disaster recovery
+archive
+hybrid cloud storage
+application hosting
+media hosting
+data lakes and big data analytics
+software delivery
+static websites
+
+Amazon S3 - Buckets
+allows people to store objects (files) in buckets (directories)
+buckets must have a globally unique name (across all regions all accounts)
+buckets are defined at the region level
+s3 looks like a global service but buckets are created in a region
+
+
+Amazon S3 - objects
+objects (files) have a key
+the key is the full path  - the key is composed of prefix + object name : s3://my-bucket/my_folder1/another_folder/my_file.txt 
+theres no concept of "directories" within buckets
+just keys with very long names that contains slashes "/"
+
+objects values are the content of the body: max obj size is 5TB - of more than 5gb, must use multi-part upload
+metadata (list of text key / value pairs - system or user metadata)
+tags 
+version id
+
+
+S3 - Security
+User-based: iam policies - which api calls should be allowed for a specific user from iam
+
+resource-based: 
+-bucket policies - bucket wide rules from the s3 console - allows cross account. -- most common 
+-object access control list (acl) - finer graint (can be disabled)
+-bucket access control list - less common, can be disabled 
+
+encryption: encrypt objects in amazon s3 using encryption keys 
+
+S3 Bucket Policies:
+json based policies - resources: buckets and objects. effect: allow or deny. actions: set of api to allow or deny. principal: the account or user to apply the policy to. 
+used to grant public access. 
+
+
+S3 - Static Website hosting
+s3 can host static websites and have the accessible on the internet 
+
+
+S3 - versioning
+you can version your files in amazon s3
+it is enabled at the bucket level
+same key overwrite will change the version
+it is best practive to version your buckets - protecting against unintended deletes, easy to roll back to previous version. 
+
+
+S3 Replication (CRR & SRR)
+must enable versioning in source and destination buckets
+CRR - cross region
+SRR - same region
+buckets can be in different aws accounts 
+copying is asynchronous
+must give proper iam permissions to s3
+-after you enable replications, only new objs are replicated
+-to replicate existing objs, use s3 batch replication
+-there is no chaining of replication
+only delete markers are replicated, not the permenant deletions. 
+
+
+S3 Storage Classes
+can move between classes manually or using s3 lifecycle configurations
+
+Durability: high Durability, same for all storage classes
+availability: measures how readily available a service is, varies depending on class. 
+
+
+amazon s3 standard, general purpose: 99.99% availability, used for frequently accessed data. low latency, high throughput. sustain 2 concurrent facility failures. use cases - big data analytics, mobile and gaming apps, content distribution
+
+amazon s3 standard-infrequent access: for data that is less frequently access but requires rapid access when needed, lower cost than s3 standard. 99.9%. use cases: disaster recovery, backups
+
+amazon s3 one zone-infrequent access: data lost when az is destroyed. 99.5%. use cases: storing secondary backup copies of on premise data or data you can recreate 
+
+glacier: low cost obj storage meant for archive / backup. pricing: price for storage + obj retrieval cost
+amazon s3 glacier instant retrieval: milisecond retrieval, great for data accessed once a quarter. minimum storage duration of 90 days
+amazon s3 glacier flexible retrieval: expited (1 to 5 mins), standard (3 to 5 hours), bulk (5 to 12 hours) - free.  minimum storage duration of 90 days
+amazon s3 glacier deep archive: for long term storage. standard (12 hours), bulk (48 hours). minimum storage duration of 180 days
+
+amazon s3 intelligent-tiering: small monthly monitoring and auto-tiering fee. moves objects automatically between access tiers based on usage. no retrieval charges in s3 intelligent-tiering.
+- frequent access tier (automatic): default tier
+- infrequent access tier (automatic): objs not access for 30 days
+- archive instant access tier (automatic): objs not access for 90 days
+- archive access tier (optional): objs not access for 90 to 700+ days
+- deep archive access tier (optional): objs not access for 180 to 700+ days
+
+you can create rules to transition classes so that it is automated. how many days to transfer could be automated
+
+-S3 Express One Zone
+high performance, single AZ storage class
+objs stored in a dir bucket (bucket in a single AZ)
+handle 100,000s requests per second with single digit millisecond latency
+up to 10x better perf than s3 standard (fifty percent lower costs)
+high Durability and availability
+colocate your storage and compute resources in the same az - reduces latency
+use case: latancy sensitive apps, data intensive apps, AI and ML training, financila modeling, media processing
+best integrated with SageMaker Model Training, Athena, EMR, Glue...
