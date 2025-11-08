@@ -754,3 +754,71 @@ high Durability and availability
 colocate your storage and compute resources in the same az - reduces latency
 use case: latancy sensitive apps, data intensive apps, AI and ML training, financila modeling, media processing
 best integrated with SageMaker Model Training, Athena, EMR, Glue...
+
+
+You can transition objects between storage classes.
+moving objects can be automated using a lifecycle rules
+
+Lifecycle rules
+-transition actions
+-expiration actions
+Rules can be created for a certan prefix
+rules can be created for certain objects tags
+
+S3 analytics: help you decide when to transition objs to the right storage class
+
+
+S3 - Requester Pays
+in general bucket owners pay for all amazon s3 storage and data transfer costs assicated with their bucket
+with requester pays buckets, the requester instead of the bucket owner pays the cost of the request and the data download from the bucket
+the requester must be authenticated in aws
+
+
+S3 Even Notifications
+object name filtering possible (*.jpg)
+can create as many s3 events as desired
+
+IAM permissions: in order this to work, we need iam permissions. we create iam permission for resource access policy. Destinations: Lambda function, sns topic and sqs queue 
+
+S3 Even Notifications with amazon eventbridge: catching all events. over 18 aws services as destinations
+
+
+S3 Baseline Performance 
+automatically scales to high request rates, latency 100-200ms
+no limits to the numver of prefixes in a bucket
+
+multi-part upload: recommended for files > 100mb, most use for files > 5gb. can help parallelize uploads - speed up transfers
+s3 transfer acceleration: transferring file to an aws edge location, which will forward the data to the s3 bucket in the target region. compatible with multi part upload 
+s3 byte-range fetches: parallelize gets by requesting specific byte ranges. can be also used to retrieve only partial data. (the head of a file.) / divides the file in its bits and parallel download
+
+
+S3 Batch operation
+perform bulk operation on existing s3 objs with a single request, example:
+-modify obj metadata and properties
+-copy objs between s3 buckets
+-uncrypt unecnrypted objs
+-modify acls, tags
+-restore objs from s3 glacier
+-invoke Lambda function to perform custom action on each obj
+
+a job consists of a list of objs, the action to perform, and optional parameters
+s3 batch operations manages retries, tracks progress, sends completion notifations, generate reports..
+you can use s3 inventory to get object list and use Athena to query and filter your objs
+
+
+S3 Storage Lens 
+understand, analyze and optimize storage across entire aws organization
+discover anomalies, identify cost efficiencies and apply data protection 
+default dashboard or create your own dashboards
+
+Metrics:
+Summary metrics
+cost-optimization metrics
+data-protection metrics
+access-management metrics
+event metrics 
+performance metrics
+activity metrics
+detailed status code metrics
+
+Free metrics vs paid metrics
