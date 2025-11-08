@@ -839,3 +839,68 @@ DSSE-KSE: double encryption based on kms
 
 You can apply bucket policy to force encryption, and refuse api calls without encryption headers
 
+
+CORS - Cross-Origin Resource sharing
+origin= scheme (optional) + host (domain) + port
+it is a web browser security that allows you to enable images, files or assets being retrieved from one s3 bucket in case request is originating from another origin
+
+S3 - MFA Delete
+will be required:
+-permanently delete an object version
+-suspend versioning on the bucket
+can be configured on aws cli. 
+
+S3 Access logs
+for audit purposes.
+any request made to s3, from any account, authorized or denied, will be logged into another s3 bucket
+data can be analyzed by data analysis Terminologies
+the target logging bucket must be in the same aws region
+
+WARNING: do not set your logging bucket to be the monitored bucket - there will be a logging loop. 
+
+
+S3 Pre-signed URLs
+generate pre-signed urls using the s3 console, aws cli or sdk
+uri expiration: s3 console - 1 to 720 mins (12 hours). aws cli - configs with --expires-in parameter in seconds (default 3600secs, max 604800secs -- ca 168 hours)
+users given a pre-signed url inherit the permissions of the user that generated the url for GET / PUT 
+
+
+S3 Glacier Vault Lock 
+adopt a WORM (Write once read many) model 
+create a vault lock policy
+lock the policy for future endpoints - helpful for compliance and data retention 
+
+
+S3 Object Lock (versioning must be enabled)
+WORM 
+block an object version deletion for a specified amout of time 
+
+-Retention mode - Compliance:
+similar to glacier vault lock. object versions cant be overwritten or deleted by any user, including root. object retention modes cant be changed, and retention periods cant be shortened
+
+-Retention mode - Governance:
+most users cant overwirte or delete an obj version or alter its lock settings. some users have special permissions to change the retention or delete the object. 
+
+-Retention period: protect the obj for a fixed period, it can be extended. 
+
+-legal hold: protect the obj indefinitely, independent from retention period. can be freely placed and removed using the s3:PutObjectLegalHold IAM permission
+
+
+
+S3 Access Points
+Defining policy with specific prefix. Example: Finance Access point - Policy that grants R/W to /finance prefix.
+
+Simpflies security management for s3 buckets
+each access point has:
+-its own dns name (internet origin or vpc origin)
+-an access point policy (Similar to bucket policy) - manage security at scale
+
+Access Points-VPC Origin:
+we can define the access point to be accessible only from within the vpc. 
+you must create vpc endpoint.
+the vpc point policy must allow access to the target bucket and access point. 
+
+
+S3 Object Lambda
+to change the object before it is retrived by the caller application
+only one s3 bucket is needed, on top of which we create s3 access point and s3 object lambda access points. 
