@@ -822,3 +822,20 @@ activity metrics
 detailed status code metrics
 
 Free metrics vs paid metrics
+
+
+S3 - Obj Encryption 
+----Server-Side Encryption (SSE)
+-sse-s3: using keys handled, managed and owned my aws. obj is encrypted server side. encryption type is aes-256. enabled by default for new buckets and new objects. must set header "x-amz-server-side-encryption": "AES256"
+
+-sse-KMS: keys handled and managed by AWS KMS (key management service). user control + audit key usage using cloudtrail. must set header "x-amz-server-side-encryption": "aws:kms" / Limitation: you may be impacted by the kms limits. when you upload, it calls the GenerateDataKey KMS API. when you download, it calls the Decrypt KMS API. Count towards the kms quota per second. you can request a quota increase using the Service Quotas Console
+
+-sse-c: fully managed by the customer outside of AWS. amazon s3 does not store the encryption key you provide. https must be used. encryption key must be provided in http header, for every http request made. 
+
+----Client-Side Encryption
+use client libraries such as amazon s3 client-side encryption library. clients must encrypt data themselves before sending to amazon s3. clients must decrpyt data themselves when retrieving from amazon s3. customer fully manages the keys and encryption cycle. 
+
+DSSE-KSE: double encryption based on kms 
+
+You can apply bucket policy to force encryption, and refuse api calls without encryption headers
+
