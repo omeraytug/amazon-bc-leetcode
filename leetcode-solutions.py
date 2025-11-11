@@ -147,3 +147,11 @@ class Solution:
 print(Solution().isPalindrome("A man, a plan, a canal: Panama"))
 
 
+# 268 Missing Number
+class Solution:
+    def missingNumber(self, nums):
+        nums.sort()
+        for i, num in enumerate(nums):
+            if i != num:
+                return i
+        return len(nums)
