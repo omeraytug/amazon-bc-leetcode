@@ -983,3 +983,222 @@ good fit for non http use cases, gaming, iot or voice over ip
 good for http use cases that require static ip addresses
 good for http use cases that required deterministic, fast regional failover 
 
+
+
+AWS Snowball
+collect data at the edge and migrate data into and out of aws
+ - storage optimized
+ - compute optimized 
+
+Snowball cannot import to glacier directly
+you must use s3 first in combination with an s3 lifecycle policy
+
+
+Amazon FSx
+launch 3rd party high per file systems on aws
+fully managed service 
+-fsx for lusture: for large scale computing. machine learning, high performance computing. ssd hdd. seamless integration with s3. can read s3 as a file system. can write the output of the computations back to s3.
+-fsx for windows file server: fully managed windows file system share drive, can be mounted on linux ec2 instances. data is backed up daily to s3. ssd hdd. 
+-fsx for netapp ontap: compatible with nfs, smb iscsi protocl. move workloads running on ontap or nas to aws. storage shrinks or grows automatically. snapshots, replications, low-cost, compression and data de-duplication. point-in-time instantaneous cloning (helpful for testing new workloads)
+-fsx for openzfs: nfs compatible. move workloads running on zfs to aws. snapshot, compression and low cost point-in-time instantaneous cloning (helpful for testing new workloads)
+
+
+FSx file system deployment options
+-Scratch file system:
+temporary storage
+data is not replicated
+high burst 
+usage: short term proccessing, optimize costs 
+
+- Persistent file system
+long term
+data is replicated within same az
+replace failed files within minutes
+usage: long term processing, sensitive data
+
+AWS Storage Gateway 
+bridge between on premises data and cloud data 
+- S3 File Gateway: nfs and smb protocol. most recently used data is cached in the file gateway. 
+- Volume Gateway: iSCSI protocl backed by s3. backed by ebs snapshots which can help restore on premises volumes. cached volumes, stored volumes. 
+- tape gateway: backed by s3 and glacier. tape archive (glacier and glacier deep archive). iSCSI-VTL 
+
+
+AWS Transfer family
+aws transfer for ftp
+aws transfer for ftps - over ssl
+aws transfer for sftp - secure ftp 
+
+
+
+AWS DataSync
+move large amout of data to and from:
+on premises / other cloud to aws
+aws to aws
+
+replication tasks can be scheduled 
+file permissions and metadata are preserved 
+AWS Snowcone: agent pre-installed (pyhiscal device)
+
+STORAGE COMPARISON
+S3: Object Storage
+S3 Glacier: Object Archival
+EBS volumes: Network storage for one EC2 instance at a time
+Instance Storage: Physical storage for your EC2 instance (high IOPS)
+EFS: Network File System for Linux instances, POSIX filesystem
+FSx for Windows: Network File System for Windows servers
+FSx for Lustre: High Performance Computing Linux file system
+FSx for NetApp ONTAP: High OS Compatibility
+FSx for OpenZFS: Managed ZFS file system
+Storage Gateway: S3 & FSx File Gateway, Volume Gateway (cache & stored), Tape Gateway
+Transfer Family: FTP, FTPS, SFTP interface on top of Amazon S3 or Amazon EFS
+DataSync: Schedule data sync from on-premises to AWS, or AWS to AWS
+Snowcone / Snowball / Snowmobile: Move large amounts of data to the cloud physically
+Database: For specific workloads, usually with indexing and querying
+
+
+
+AWS Integration and Messaging 
+1- synchronous communications - app to app
+2- asynchronous / event based - app to queue to app 
+
+async can be problematic bc of sudden spikes of traffic 
+its better to decouple your applications:
+sqs - queue 
+sns - pub/sub model
+kinesis - real time streaming model 
+
+these services can scale independently from our app 
+
+
+SQS 
+producer(s) send message to sqs queue and consumer(s) poll messages from the queue
+decouple apps
+-unlimited throughput, unlimited number of messages in q 
+-default 4 days, maximus 14 days 
+-low latency
+-can have duplicate messages
+-messages up to 1024 kb 
+-consumers poll up to 10 messages 
+-consumers delete messages after processing them 
+-encryption: in flight, at rest using kms, client side 
+
+SQS with auto scaling group
+cloudwatch metric -q length -> cloudwatch alarm which will make it autoscale the e2 instance amount 
+
+
+sqs visibility timeout : 30 secs, if not deleted, after 30 sec another consumer might poll and processed twice. 
+consumer can call ChangeMessageVisibility api to get more time if it needs more time to process it. 
+
+Long polling: when a consumer requests messages from the q, it can optinally wait for messages to arrive if there are none in the q. API: WaitTimeSeconds 
+
+
+FIFO Queue: First in First Out. - exactly-once send capability. processed in order by the consumer. 
+
+
+
+SNS - PUB SUB 
+event producer only send message to one SNS topic
+as many even receivers (subscriptions) as we want to listen to the sns topic notifations
+each sub to the topic will get all the messages 
+
+publish:
+topic publish
+direct publish (mobile)
+
+encryption: in flight, at rest using kms, client side 
+
+SNS protocols:
+amazon kinesis data firehose
+amazon sqs
+aws lambda
+email
+email-json
+http
+https
+sms 
+
+
+
+Amazon Kinesis Data Streams
+collect and store streaming data in real-time (Click streams-iot devices-metrics&logs) -> producers (apps-kinesis agent) -> amazon kinesis data streams -> Consumers (app-lambda-amazon data firehose-managed service for apache flink)
+
+-retention between up to one year
+-ability to reprocess (replay) data by consumers
+-data cant be deleted from kinesis until it expires 
+-data up to 1mb 
+-data ordering guarantee for data with the same "Partition ID"
+-at rest kms-encryption. in flight https encryption
+-kinesis producer library (KPL) to write an optimized producer app 
+-kinesis client library (KCL) to write an optimized consumer app
+
+capacity modes:
+-provisioned mode: choose number of shards - each shard gets 1mb/s in, 2mb/s out. scale manually to increase or decreas the number of shards. you pay per shard provisioned per hour 
+-on demand mode: no need to provision or manage the capacity. default capacity provisioned. scale auto. pay per stream per hour and data in/out per GB. 
+
+
+
+Amazon Data Firehose 
+send data from sources to target destinations. you can do data transformations using lambda before sending
+
+fully managed service
+automatic scaling, serverless, pay for what you use.
+NEAR REAL TIME with buffering capabilitybased on size / time
+
+
+Kinesis Data Streams vs Amazon Data Firehose
+
+Kinesis Data Streams:
+Streaming data collection.
+Producer and consumer code required.
+Real-time processing.
+Provisioned or On-Demand capacity modes.
+Stores data for up to 365 days.
+Supports replay capability.
+
+Amazon Data Firehose:
+Loads streaming data into S3, Redshift, OpenSearch, third-party destinations, or custom HTTP endpoints.
+Fully managed service.
+Processes data in near real-time.
+Automatically scales.
+Does not store data.
+Does not support replay capability.
+
+
+SQS vs SNS vs Kinesis 
+
+SQS:
+Consumer “pulls data”.
+Data is deleted after being consumed.
+Allows unlimited workers (consumers).
+No need to provision throughput.
+Ordering is guaranteed only for FIFO queues.
+Supports individual message delay.
+
+SNS:
+Pushes data to many subscribers.
+Supports up to 12,500,000 subscribers.
+Data is not persisted (lost if not delivered).
+Follows the Pub/Sub model.
+Supports up to 100,000 topics.
+No need to provision throughput.
+Integrates with SQS for fan-out patterns.
+Provides FIFO capability for SQS FIFO.
+
+Kinesis: 
+Standard mode uses pull data (2 MB per shard).
+Enhanced fan-out uses push data (2 MB per shard per consumer).
+Supports replaying data.
+Designed for real-time big data, analytics, and ETL.
+Provides ordering at the shard level.
+Data expires after X days.
+Supports provisioned mode and on-demand capacity mode.
+
+
+Amazon MQ 
+when migrating from on premises to the cloud, we can use amazon mq
+its a managed message broker service for: rabbit mq and active mq. 
+amazon mq doesnt scale as much as sqs or sns
+amazon mq runs on servers, can run in multi az with failover
+it has both q feature (sqs) and topic features (sns)
+
+high availability: with efs attached to the amazon mq brokers in different az, within failover it can change to the standby az 
