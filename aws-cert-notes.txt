@@ -904,3 +904,82 @@ the vpc point policy must allow access to the target bucket and access point.
 S3 Object Lambda
 to change the object before it is retrived by the caller application
 only one s3 bucket is needed, on top of which we create s3 access point and s3 object lambda access points. 
+
+
+
+
+AWS CloudFront
+Content Delivery Network (CDN)
+improves read perf by caching content
+improves users experience
+hundreds of point os presence globally (edge locations, caches)
+DDoS protection, integration with Shield, AWS Web Application Firewall 
+
+CloudFront - Origins
+S3 Bucket 
+VPC origin
+Custom Origin (HTTP)
+
+
+CloudFront vs S3 Cross Region Replication
+CloudFront:
+- Global Edge network
+- Files are cached for a TTL (maybe a day)
+- Great for static content that must be available everywhere
+
+S3 Cross Region Replication:
+- Must be setup for each region you want replication to happens
+- Files are updated in near real-time
+- Read only
+- Great for dynamic content that needs to be avaliable at low-latency in few regions
+
+
+CloudFront Geo Restriction
+you can restric who can access your distribution: allowlist / blocklist
+
+
+CloudFront - Pricing 
+the cost of data out per edge location varies
+
+you can reduce the number of edge locations for cost reduction
+- price class all
+- price class 200: most regions, but excludes the most expensive regions
+- price class 100: only the least expensive regions 
+
+
+cloudfront - cache invalidations
+if you update the backend cloudfront wont know until the ttl has expired
+however you can force an entire or partial cache refresh (thus bypassing the ttl) by performing CloudFront Invalidation 
+you can invalidate all files by * or a special path (/images/*)
+
+
+AWS Global Accelerator 
+Unicast IP: one server holds one IP address
+Anycast IP: all servers hold the same IP address and the client is routed to the nearest one 
+
+leverage the aws internal network to route to your application 
+2 Anycast ip are created for your application
+the Anycast ip send traffic directly to edge locations
+the edge locations send the traffic to your application
+- works with elastic ip, ec2 instances, alb, nlb, public or private 
+- consistent performance
+- health checks
+- security 
+
+
+AWS Global Accelerator vs CloudFront
+- they both use the aws global network and its edge locations
+- both integrate with AWS shield for ddos protection
+
+cloudfront:
+improves perf for both cacheable content (images, videos)
+dynamic content - api acceleration and dynamic site delivery
+content in served at the edge
+
+global accelerator:
+improves perf for a wide range of applications over tcp or udp
+proxying packets at the edge to applications running in one or more aws regions
+good fit for non http use cases, gaming, iot or voice over ip
+good for http use cases that require static ip addresses
+good for http use cases that required deterministic, fast regional failover 
+
