@@ -1203,3 +1203,84 @@ amazon mq runs on servers, can run in multi az with failover
 it has both q feature (sqs) and topic features (sns)
 
 high availability: with efs attached to the amazon mq brokers in different az, within failover it can change to the standby az 
+
+
+
+CONTAINERS ON AWS: ECS, FARGATE, ECR & EKS 
+
+Docker - basic docker explaination
+
+where are docker images stored?
+-Docker Hub
+-Amazon ECR (Amazon Elastic Container Registry)
+
+Docker Containers Management on AWS
+-amazon elastic container service (Amazon ECS): amazons own container platform
+-amazon elastic kubernetes service (Amazon EKS): amazons managed kubernetes (open source)
+-aws fargate: amazons own serverless container platform. works with ECS and with EKS
+-amazon ecr: store container images
+
+
+
+Amazon ECS - ec2 launch type
+-ecs = elastic container service
+-when you launch docker containers on aws you launch ecs tasks on ecs clusters.
+-ec2 launch type: you must provision and maintain the infra (the ec2 instances)
+-each ec2 instace must run the ecs agent to register in the ecs cluster
+-aws takes care of starting/stopping containers
+
+Amazon ECS - Fargate Launch Type
+-launch docker containers on aws
+-you do not provision the infra (no ec2 instaces to manages)
+-its all serverless!
+-aws just run ecs task for you based on the cpu, ram you need
+-to scale, just increase the number of tasks, simple - no more ec2 instances
+
+Amazon ECS - iam roles for ECS
+-ec2 instance profile (ec2 launch type only):
+used by the ecs agent
+makes api calls to ecs service
+send container logs to cloudwatch logs
+pull docker image from ecr
+reference sensitive data in Secrets Manager or SSM- Parameter Store
+
+-ecs task role:
+allows each task to have a specific role
+use different roles for the different ecs services you run
+task role is defined in the task definition
+
+Amazon ECS - Load Balancer Integrations
+- ALB supported and works for most use cases
+- NLB recommended only for high throughput / high perf use cases or to pair it with AWS Private Link
+- CLB supported but not recommended (no advance features - no Fargate)
+
+Amazon ECS - Data Volumes (EFS)
+-mount efs file systems onto ecs tasks
+-works for both ec2 and fargate launch Types
+-tasks running in any az will share the same data in the EFS file system
+-Fargate + EFS = Serverless 
+Use cases: persistent multi-az shared storage for your containers
+Note: amazon s3 cannot be mounted as a file system 
+
+
+ECS Service Auto Scaling
+-automaticall increase/decrease the desired number of ecs tasks
+-amazon ecs autoscaling uses AWS Application Auto Scaling:
+ecs service average CPU utilization
+ecs service average memory utilization - scale on ram
+alb request count per target - metric coming from the alb
+-target tracking - scale based on target value for a specific cloudwatch metric
+- step scaling - scale based on a specified cloudwatch alarm 
+-scheduled scaling - scale based on a specified date/time (predictable changes)
+
+-ecs service auto scaling (task level) != ec2 auto scaling (ec2 instance level)
+-fargate auto scaling is much easier to setup (because serverless)
+
+
+EC2 launch type - auto scaling ec2 instances
+-auto scaling group scaling: scale based on cpu utilization, add ec2 instances over time
+-ecs cluster capacity provider: 
+automaticaly provision and scale the infra for you ecs tasks.
+capacity provider paired with an ASG 
+add ec2 instances when your missing capacity (cpu,ram)
+
