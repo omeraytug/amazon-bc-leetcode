@@ -178,3 +178,20 @@ class Solution:
                 in_word = False
 
         return count
+
+# 485 Max Consecutive Ones
+class Solution:
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        maximum = 0 # the longest streak we have seen overall
+        current = 0 # how many 1s we have counted consecutively right now
+
+        for x in nums:
+            if x == 1:
+                current += 1
+                if current > maximum:
+                    maximum = current
+            else:
+                current = 0
+
+        return maximum
+    
