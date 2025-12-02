@@ -1321,9 +1321,9 @@ Support for: EBS, EFS (works with fargate), fsx for lustre, fsx for netapp ontap
 
 
 AWS App Runner
--fully managed service that makes it easy to deploy wev apps and apis at scale
+-fully managed service that makes it easy to deploy web apps and apis at scale
 -no infra exprience needed
--start with you source code or container image
+-start with your source code or container image
 -automatically builds and deploy the web app
 -automatic scaling, highly available, load balancer, encryption
 -vpc access support 
