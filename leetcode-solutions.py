@@ -195,3 +195,34 @@ class Solution:
 
         return maximum
     
+
+
+# 504 Base 7
+
+# 100 / 7 = 14 % 2
+# 14 / 7 = 2  % 0
+# 2 / 7 = 0 % 2
+# base 7 - 202 (210)
+# 2x7² + 0x7¹ + 2x7⁰  
+# 98 + 0 + 2 
+
+# base representation of base 7 goes upwards
+
+class Solution:
+    def convertToBase7(self, num: int) -> str:
+        if num == 0:
+            return '0'
+
+        original_num = num # add after
+        num = abs(num) # add after
+        remainders = []
+
+        while num > 0:
+            remainder = num % 7
+            remainders.append(str(remainder))
+            num //= 7
+    
+        if original_num < 0: # add after
+            remainders.append('-') # add after
+        remainders.reverse()
+        return ''.join(remainders)
