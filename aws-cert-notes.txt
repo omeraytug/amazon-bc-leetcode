@@ -2464,3 +2464,32 @@ use eventbridge to trigger notifications when aws resources are non compliant
   • Evaluate resources against compliance rules
   • Get timeline of changes and compliance
   #############################
+
+
+
+
+IAM - Advanced
+
+AWS Organizations
+  -global services
+  - manage multiple aws accounts
+  - main account is the management account.other accounts are member accounts
+  - member account can only be part of one org
+  - single payment method on management account
+  - pricing benefits from aggregated usage (volume discount)
+  - shared reserved instances and savings plans discounts accross accounts
+  - api to automate aws account creation
+
+Organization units (OU) (kinda like teams)
+
+• Advantages
+    • Multi Account vs One Account Multi VPC
+    • Use tagging standards for billing purposes
+    • Enable CloudTrail on all accounts, send logs to central S3 account
+    • Send CloudWatch Logs to central logging account
+    • Establish Cross Account Roles for Admin purposes
+
+• Security: Service Control Policies (SCP)
+    • IAM policies applied to OU or Accounts to restrict Users and Roles
+    • They do not apply to the management account (full admin power)
+    • Must have an explicit allow from the root through each OU in the direct path to the target account (does not allow anything by default – like IAM)
