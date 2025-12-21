@@ -2304,7 +2304,7 @@ alarm stats: ok, insufficient_data, alarm
 period
 
 
-Cloudwatch alarm targers
+Cloudwatch alarm targets
 -stop, terminate, reboot, recover an ec2 instance
 -trigger auto scaling actions
 -send notifications to sns (from which you can do anything)
@@ -2315,3 +2315,54 @@ composite alarms are monitoring the states of multiple other alarms: and or cond
 good to reduce alarm noise by creating complex composite alarms
 
 good to know: alarms can be created on cloudwatch logs metrics filters
+
+
+
+EventBridge Overview (formerly CloudWatch Events)
+-schedule: cron jobs(scheduled scripts - every hour trigger script on lambda function)
+-event pattern: event rules to react to a service doing something
+-trigger lambda functions, send sns/sqs messages
+
+Amazon EventBridge Rules
+you can set filters 
+(from source to amazon eventbridge to destination)
+
+
+EventBridge - Schema Registry
+eventbridge can analyze the events in your bus and infer the schema
+the schema registry allows you to generate code for your app, that will know in advance how data is structured in the event bus
+schema can be versioned
+
+EventBridge - Resource-based Policy
+manage permissions for a specifc event bus
+example: allow/deny events from another aws account or aws region
+use case: aggregate all events from your aws organization in a single aws account or aws region
+
+
+
+CloudWatch Container Insights
+collect, aggregate, summarize metrics and logs from containers
+ECS
+EKS
+kubernetes platforms on ec2
+fargates
+-in amazon eks and kubernetes, cloudwatch insights is using a containerized version of the cloudwatch agent to discover contaniners
+
+Cloudwatch Lambda Insights
+-monitoring and troubleshooting solution for serverless apps running on aws lambda
+-metrics including cpu time, memory, disk and network
+-lambda insights is provided as a lambda layer
+
+Cloudwatch contributor insights
+analyze log data and create time series that display contributor data
+-top talkers and understand who or what is impacting system performance
+works for any aws generated logs (vpc, dns etc)
+for example you can find bad hosts, heaviest network users, or find the urls that generate the most errors
+you can build your rules from scratch, there are also built-in rules
+
+Cloudwatch Application Insights
+provides automated dashboards that show potential problems with monitored applications, to help isolate ongoing issues
+powered by sagemaker
+enhanced visibility to your app health
+alerts are sent to amazon eventbridge and ssm opscenter
+
