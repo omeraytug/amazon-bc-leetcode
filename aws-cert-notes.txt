@@ -2463,7 +2463,7 @@ use eventbridge to trigger notifications when aws resources are non compliant
   • Record configuration changes
   • Evaluate resources against compliance rules
   • Get timeline of changes and compliance
-  #############################
+#############################
 
 
 
@@ -2493,3 +2493,51 @@ Organization units (OU) (kinda like teams)
     • IAM policies applied to OU or Accounts to restrict Users and Roles
     • They do not apply to the management account (full admin power)
     • Must have an explicit allow from the root through each OU in the direct path to the target account (does not allow anything by default – like IAM)
+
+
+
+
+Organizations - Tag Policies
+helps you standardize tags across resources in an aws org
+ensure consistent tags, audit tagged resources, maintain proper resources categorization...
+you define tag keys and their allowed values
+helps with aws cost allocation tags and attribute based access control
+prevent any non compliant tagging operations on specified services and resources
+generate a report that lists all tagged/non complaint resources
+use eventbridge to monitor non compliant tags
+
+
+IN IAM POLICIES IT IS VERY IMPORTANT WHERE THE BOUNDRY IS SET. CHECK WHERE IT IS SET AND IF IT MAKES SENSE TO DO SOMETHING "BIGGER" THAN YOUR BOUNDRY
+
+
+
+AWS IAM Identity Center (successor to AWS Single Sign-on)
+-one login for everything
+
+
+
+
+AWS Directory Services
+• AWS Managed Microsoft AD
+    • Create your own AD in AWS, manage users locally, supports MFA
+    • Establish “trust” connections with your on-premise AD
+
+• AD Connector
+    • Directory Gateway (proxy) to redirect to on-premise AD, supports MFA
+    • Users are managed on the on-premise AD
+
+• Simple AD
+    • AD-compatible managed directory on AWS
+    • Cannot be joined with on-premise AD
+
+
+
+AWS Control Tower
+set up and govern a secure and complaint multi account aws environment based on best practices
+aws control tower uses aws organizations to create accounts
+benefits: automate setup of env in few clicks. automate ongoing policy management using guardrials. detect policy violations and remediate them. monitor compliance through an interactive dashboard.
+
+AWS Control Tower - Guardrials
+• Provides ongoing governance for your Control Tower environment (AWS Accounts)
+• Preventive Guardrail – using SCPs (e.g., Restrict Regions across all your accounts)
+• Detective Guardrail – using AWS Config (e.g., identify untagged resources)
