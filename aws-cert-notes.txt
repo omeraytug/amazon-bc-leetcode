@@ -2214,3 +2214,73 @@ SageMaker: machine learning for every developer and data scientist
 Kendra: ML-powered search engine
 Personalize: real-time personalized recommendations
 Textract: detect text and data in documents
+
+
+
+
+
+
+AWS MONITORING & AUDIT 
+
+Amazon Cloudwatch Metrics
+provides every metrics for every services in aws 
+metric is a variable to monitor (CPUUtilization, NetworkIn...)
+metrics belong to namespaces 
+dimension is an attribute of a metric 
+up to 30 dimensions per metric
+metrics have timestamps
+can create cloudwatch dashboards of metrics
+can create cloudwatch custom metrics (for the ram for example)
+
+CloudWatch metric streams
+Continually stream CloudWatch metrics to a destination of your choice, with near-real-time delivery and low latency.
+    Amazon Kinesis Data Firehose (and then its destinations)
+    3rd party service provider: Datadog, Dynatrace, New Relic, Splunk, Sumo Logic…
+Option to filter metrics to only stream a subset of them
+
+
+CloudWatch Logs
+Log groups: arbitrary name, usually representing an application
+Log stream: instances within application / log files / containers
+Can define log expiration policies (never expire, 1 day to 10 years…)
+CloudWatch Logs can send logs to:
+    Amazon S3 (exports)
+    Kinesis Data Streams
+    Kinesis Data Firehose
+    AWS Lambda
+    OpenSearch
+Logs are encrypted by default
+Can setup KMS-based encryption with your own keys
+
+
+CloudWatch Logs - sources
+SDK, CloudWatch Logs Agent, CloudWatch Unified Agent
+Elastic Beanstalk: collection of logs from application
+ECS: collection from containers
+AWS Lambda: collection from function logs
+VPC Flow Logs: VPC specific logs
+API Gateway
+CloudTrail based on filter
+Route53: Log DNS queries
+
+
+CloudWatch Logs insights 
+search and analyze log data stored in cloudwatch logs - querying capability - query engine, not a real time engine
+example: find a specific ip inside a log, count occurerences of error in your logs
+provides a purpose-built query language
+can query multiple log groups in different aws accounts
+
+
+Cloudwatch logs - s3 exports
+log data can take up to 12 hours to become available for export
+the api call is CreateExportTask
+not near real time or real time... use Logs subscriptions instead 
+
+
+Cloudwatch logs subscriptions   
+real time log event from Cloudwatch logs for processing and analysis
+send to kinesis data streams, kinesis data firehose, or lambda
+subscription filter - filter which logs are event delivred to your destination
+- cross-account subscription: send log events to resources in a different aws account
+
+
