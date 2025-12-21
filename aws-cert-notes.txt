@@ -2366,3 +2366,101 @@ powered by sagemaker
 enhanced visibility to your app health
 alerts are sent to amazon eventbridge and ssm opscenter
 
+
+#########
+• CloudWatch Container Insights
+ • ECS, EKS, Kubernetes on EC2, Fargate, needs agent for Kubernetes
+ • Metrics and logs
+
+• CloudWatch Lambda Insights
+ • Detailed metrics to troubleshoot serverless applications
+
+• CloudWatch Contributors Insights
+ • Find “Top-N” Contributors through CloudWatch Logs
+
+• CloudWatch Application Insights
+ • Automatic dashboard to troubleshoot your application and related AWS services
+#########
+
+CloudTrail
+provides governance, compliance and audit for your aws account - history of event and api calls
+can put logs from cloudtrail into cloudwatch logs or s3
+
+
+CloudTrail Events
+
+Management Events:
+Operations that are performed on resources in your AWS account
+Examples:
+    Configuring security (IAM AttachRolePolicy)
+    Configuring rules for routing data (Amazon EC2 CreateSubnet)
+    Setting up logging (AWS CloudTrail CreateTrail)
+By default, trails are configured to log management events.
+Can separate Read Events (that don’t modify resources) from Write Events (that may modify resources)
+
+Data Events:
+By default, data events are not logged (because high volume operations)
+Amazon S3 object-level activity (ex: GetObject, DeleteObject, PutObject): can separate Read and Write Events
+AWS Lambda function execution activity (the Invoke API)
+
+CloudTrail Insights Events:
+ Enable CloudTrail Insights to detect unusual activity in your account:
+    • inaccurate resource provisioning
+    • hitting service limits
+    • Bursts of AWS IAM actions
+    • Gaps in periodic maintenance activity
+CloudTrail Insights analyzes normal management events to create a baseline
+And then continuously analyzes write events to detect unusual patterns
+    • Anomalies appear in the CloudTrail console
+    • Event is sent to Amazon S3
+    • An EventBridge event is generated (for automation needs)
+
+Retention: 90 days. if you want to keep them for longer, log them to s3 and use athena
+
+
+
+AWS Config
+• Helps with auditing and recording compliance of your AWS resources
+• Helps record configurations and changes over time
+
+• Questions that can be solved by AWS Config:
+    • Is there unrestricted SSH access to my security groups?
+    • Do my buckets have any public access?
+    • How has my ALB configuration changed over time?
+
+• You can receive alerts (SNS notifications) for any changes
+• AWS Config is a per-region service
+• Can be aggregated across regions and accounts
+• Possibility of storing the configuration data into S3 (analyzed by Athena)
+
+
+Config Rules
+can use aws managed config rules - over 75
+can make custom config rules (must be defined in aws lambda)
+rules can be evaluated / triggered
+aws config rules does not prevent actions from happening (no deny)
+
+Config Rules - Remediations
+automate remediation of non-compliant resources using ssm automation documents
+use aws-managed automation documents or create custom automation documents - you can create custom automation documents that invokes lambda function
+you can set remediation retries if the resource is still non compliant after autoremediation
+
+Config Rules - notifications
+use eventbridge to trigger notifications when aws resources are non compliant 
+
+#############################
+• CloudWatch
+  • Performance monitoring (metrics, CPU, network, etc…) & dashboards
+  • Events & Alerting
+  • Log Aggregation & Analysis
+
+• CloudTrail
+  • Record API calls made within your Account by everyone
+  • Can define trails for specific resources
+  • Global Service
+
+• Config
+  • Record configuration changes
+  • Evaluate resources against compliance rules
+  • Get timeline of changes and compliance
+  #############################
