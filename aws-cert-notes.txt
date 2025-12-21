@@ -2284,3 +2284,34 @@ subscription filter - filter which logs are event delivred to your destination
 - cross-account subscription: send log events to resources in a different aws account
 
 
+CloudWatch Agent
+cloudwatch logs for ec2: by default no logs from ec2 machine will go to cloudwatch. need to run a cloudwatch agent on ec2 to push the log files you want. make sure iam permissions are correct. the cloudwatch log agent can be setup on premises too
+ 
+Cloudwatch logs agent & Unified Agent
+-for virtual servers  (ec2, on premise serves)
+-cloudwatch logs agent: old version. can only send to cloudwatch logs
+-cloudwatch unified agent: collect additional system-level metrics such as ram, processes etc. collect logs to send to cloudwatch logs. centralized configuration using ssm parameter store
+
+cloudwatch unified agent - metrics
+collected directly on your linux server/ec2 instace
+cpu, disk metrics, ram, netstat, processes, swap space
+
+
+
+Cloudwatch Alarms
+trigger notifications for any metric
+alarm stats: ok, insufficient_data, alarm
+period
+
+
+Cloudwatch alarm targers
+-stop, terminate, reboot, recover an ec2 instance
+-trigger auto scaling actions
+-send notifications to sns (from which you can do anything)
+
+cloudwatch alarms composite alarms
+cloudwatch alarms are on a single metric
+composite alarms are monitoring the states of multiple other alarms: and or conditions
+good to reduce alarm noise by creating complex composite alarms
+
+good to know: alarms can be created on cloudwatch logs metrics filters
