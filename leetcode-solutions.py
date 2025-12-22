@@ -226,3 +226,10 @@ class Solution:
             remainders.append('-') # add after
         remainders.reverse()
         return ''.join(remainders)
+    
+
+
+# 575 Distribute Candies
+class Solution:
+    def distributeCandies(self, candyType: List[int]) -> int:
+        return min(len(set(candyType)), len(candyType)//2)
