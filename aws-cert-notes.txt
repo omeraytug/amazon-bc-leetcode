@@ -2555,7 +2555,7 @@ Server-side encryption at rest: data is encrypted after being received by the se
 Client-side encryption: data is encrypted by the client, never decrypted by the server. client can decrypt. 
 
 
-AWS KM (Key Management Service)
+AWS KMS (Key Management Service)
 • Anytime you hear “encryption” for an AWS service, it’s most likely KMS
 • AWS manages encryption keys for us
 • Fully integrated with IAM for authorization
@@ -2750,7 +2750,7 @@ CloudHSM
 
 • CloudHSM clusters are spread across multi AZ
 • Great for availability and durability
- 
+
 
 
 
