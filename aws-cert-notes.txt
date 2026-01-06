@@ -2736,6 +2736,24 @@ ACM – Integration with API Gateway
 
 
 
+CloudHSM
+• KMS => AWS manages the software for encryption
+• CloudHSM => AWS provisions encryption hardware
+• Dedicated Hardware (HSM = Hardware Security Module)
+• You manage your own encryption keys entirely (not AWS)
+• HSM device is tamper resistant, FIPS 140-2 Level 3 compliance
+• Supports both symmetric and asymmetric encryption (SSL/TLS keys)
+• No free tier available
+• Must use the CloudHSM Client Software
+• Redshift supports CloudHSM for database encryption and key management
+• Good option to use with SSE-C encryption
+
+• CloudHSM clusters are spread across multi AZ
+• Great for availability and durability
+ 
+
+
+
 AWS WAF – Web Application Firewall
 • Protects your web applications from common web exploits (Layer 7)
 • Layer 7 is HTTP (vs Layer 4 is TCP/UDP)
