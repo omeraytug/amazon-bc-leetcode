@@ -2886,7 +2886,7 @@ IPs are made of 4 octets, when it comes to octets:
 /16 - last 2 octets can change
 /8 - last 3 octets can change
 /0 - all octets can change
-
+max cidr is /16 in aws
 
 
 Default VPC Walkthrough
@@ -3236,6 +3236,7 @@ VPC Section Summary
 • Egress-only Internet Gateway – similar to a NAT Gateway, but for IPv6 only
 
 
+
 Networking Costs in AWS per GB
 -inbound traffic going into ec2 is free
 -ec2 instances in the same az if using private ip is free
@@ -3268,3 +3269,22 @@ Scenario: You have an EC2 instance in a private subnet and want to connect the S
 
 - You could set up a NAT Gateway which will connect to the Internet Gateway and that you will have internet connection, so that you could connect to the s3 bucket - pricing: • $0.045 NAT Gateway / hour • $0.045 NAT Gateway data processed / GB • $0.09 Data transfer out to S3 (cross-region) • $0.00 Data transfer out to S3 (same-region) - THIS IS VERY EXPENSIVE
 - You could just set up a VPC Endpoint which way you could directly connect to the S3 bucket - pricing: no cost for using Gateway Endpoint. $0.01 data transfer in/out (same-region)
+
+
+
+
+aws network firewall
+- protect your entire amazon vpc from layer 3 to layer 7 protection
+- any directin you can inspect: vpc to vpc, outbound to internet, inbound from internet, to/frpom direct connect & site-to-site vpn
+- internally the aws network firewall uses aws gateway load balancer
+- rules can be centrally managed cross account by aws firewall manager to apply to many vpcs
+
+Network Firewall - Fine Grained Controls
+• Supports 1000s of rules
+    • IP & port (example: 10,000s of IPs filtering)
+    • Protocol (example: block the SMB protocol for outbound communications)
+    • Stateful domain list rule groups (only allow outbound traffic to *.mycorp.com or third-party software repo)
+    • General pattern matching using regex
+• Traffic filtering: allow, drop, or alert for traffic that matches the rules
+• Active flow inspection to protect against network threats with intrusion-prevention capabilities (like Gateway Load Balancer, but fully managed by AWS)
+• Send logs of rule matches to Amazon S3, CloudWatch Logs, Kinesis Data Firehose
