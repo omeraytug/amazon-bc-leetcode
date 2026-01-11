@@ -3195,3 +3195,15 @@ VPC – Traffic Mirroring
 • Capture all packets or capture the packets of your interest (optionally, truncate packets)
 • Source and Target can be in the same VPC or different VPCs (VPC Peering)
 • Use cases: content inspection, threat monitoring, troubleshooting, …
+
+
+
+Egress-only Internet Gateway
+• Used for IPv6 only
+• (similar to a NAT Gateway but for IPv6)
+
+• Allows instances in your VPC outbound connections over IPv6 while preventing the internet to initiate an IPv6 connection to your instances
+• You must update the Route Tables
+
+
+
