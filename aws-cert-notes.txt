@@ -3226,10 +3226,10 @@ VPC Section Summary
 • AWS VPN CloudHub – hub-and-spoke VPN model to connect multiple sites
 • Direct Connect – set up a Virtual Private Gateway on the VPC and establish a direct private connection to an AWS Direct Connect location - takes more time to setup
 • Direct Connect Gateway – set up Direct Connect to multiple VPCs across different AWS regions
-• AWS PrivateLink / VPC Endpoint Services
-• Connect services privately from a service VPC to customer VPCs
-• No need for VPC Peering, public internet, NAT Gateway, or route tables
-• Must be used with a Network Load Balancer and ENI
+• AWS PrivateLink / VPC Endpoint Services:
+    • Connect services privately from a service VPC to customer VPCs
+    • No need for VPC Peering, public internet, NAT Gateway, or route tables
+    • Must be used with a Network Load Balancer and ENI
 • ClassicLink – connect EC2-Classic instances privately to a VPC
 • Transit Gateway – provides transitive peering for VPC, VPN, and Direct Connect
 • Traffic Mirroring – copies network traffic from ENIs for analysis
