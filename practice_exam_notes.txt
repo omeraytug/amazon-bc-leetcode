@@ -1,2 +1,35 @@
 Amazon RDS multi-az deployment: sync replication - at least two AZ within a single region.
 Amazon RDS read replicas: async replicastion - can be within an AZ, cross AZ or cross-region
+
+
+Backup and Restore: cheap, high RPO and RTO
+Pilot High: small version of app is always running in cloud, faster
+Warm Standby: full system is up and running but at min size. Upon disaster we can scale to production load
+
+
+Hot Site / Multi Site Approach: minutes or seconds, very expensive. Full production scale is running AWS and on prem
+
+
+Elastic Fabric Adapter (EFA): improved ENA for HPC only for Linux
+
+
+Compute and Networking:
+EC2: CPU and GPU optimized. Spot instances/Spot fleets for cost savings + auto scaling 
+EC2 Placement Group: Cluster for good network performance. Same AZ, low latency, 10Gbps network 
+EC2 Enhanced networking: (SR-IOV): higher bandwidth, higher packet per second, PPS, lower latency
+-Option 1: Elastic Network Adapter (ENA) up to 100 Gbps
+-Option 2: Intel 82599 VF to 10 Gbps - Legacy
+Elastic Fabric Adapter (EFA): improved ENA for HPC only for Linux
+
+
+AWS Fargate: Amazon’s own Serverless container platform →works with ECS and EKS
+
+
+Cognito: give users identity to interact with web or mobile apps
+User Pools: sign in for app users -serverless DB of users for web &mobile apps
+Identity Pools: temp AWS credentials to access AWS resources
+
+
+
+Transit Gateway 
+-Transitvíve peering between many VPCs and on prem, hub and spoke (star) connections
