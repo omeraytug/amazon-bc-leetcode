@@ -1,0 +1,2 @@
+Amazon RDS multi-az deployment: sync replication - at least two AZ within a single region.
+Amazon RDS read replicas: async replicastion - can be within an AZ, cross AZ or cross-region
