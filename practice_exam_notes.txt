@@ -33,3 +33,23 @@ Identity Pools: temp AWS credentials to access AWS resources
 
 Transit Gateway 
 -Transitvíve peering between many VPCs and on prem, hub and spoke (star) connections
+
+REAL-TIME = KENESIS
+
+You put cloudfront infront of the s3 - static info etc
+
+DynamoDB is fully-managed service (serverless as well) which makes it easy to deploy unlike Aura (which is also serverless). On the docs it says Auroradb is fully managed but you need to deploy it yourself.
+
+High Performance Computing scenario for ec2 instances -> cluster 
+
+high io storage for ec2 - instance store
+
+Amazon DynamoDB is not relational
+Amazon Aurora is Relational
+
+Amazon GuardDuty is a fully managed, intelligent threat detection service that continuously monitors AWS accounts, workloads, and data for malicious activity. 
+Amazon Inspector is an automated vulnerability management service on AWS that continuously scans your EC2 instances, container images (in ECR), Lambda functions, and code repositories for software vulnerabilities and unintentional network exposure, providing prioritized security findings to help you improve your security posture.
+
+Spot instances - DELAY
+
+cloudfront does not have native built-in cognito integration. 
