@@ -53,3 +53,6 @@ Amazon Inspector is an automated vulnerability management service on AWS that co
 Spot instances - DELAY
 
 cloudfront does not have native built-in cognito integration. 
+
+AWS PrivateLink is a service that allows you to connect privately to services in another VPC or SaaS provider without using the public internet.
+Traffic stays inside the AWS network, not the public internet.
